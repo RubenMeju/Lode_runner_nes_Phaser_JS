@@ -1,6 +1,8 @@
 import { createAnimations } from "../animations.js";
 import { Bloque } from "../objects/Bloque.js";
 import { Player } from "../objects/Player.js";
+import { Oro } from "../objects/Oro.js";
+import { Escalera } from "../objects/Escalera.js";
 
 export class GameScene extends Phaser.Scene {
   constructor() {
@@ -26,14 +28,6 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
-  manejarOro(player, tile) {
-    console.log("¡Colisión con oro!");
-  }
-
-  manejarEscalera(player, tile) {
-    console.log("¡Colisión con escalera!");
-  }
-
   create() {
     createAnimations(this);
 
@@ -49,43 +43,19 @@ export class GameScene extends Phaser.Scene {
 
     const tileset = this.mapa.addTilesetImage("tileSets");
 
-    //escaleras
-    this.escaleras = this.mapa.createLayer("escalerass", tileset, 0, 0);
-    this.escaleras.setScale(this.escalado);
-
-    // oro
-    this.oro = this.mapa.createLayer("oroo", tileset, 0, 0);
-    this.oro.setScale(this.escalado);
+    // Crear las capas
+    this.escalerasLayer = this.mapa.createLayer("escalerass", tileset, 0, 0);
+    this.escalerasLayer.setScale(this.escalado);
+    this.oroLayer = this.mapa.createLayer("oroo", tileset, 0, 0);
+    this.oroLayer.setScale(this.escalado);
 
     // Crear el jugador
     this.jugador = new Player(this, 548, 148, "player", 0);
     this.physics.add.collider(this.jugador, this.bloques.solidos);
 
-    // Agregar un overlap para manejar la interacción del jugador con el oro
-    this.physics.add.overlap(
-      this.jugador,
-      this.oro,
-      (player, tile) => {
-        if (tile && tile.properties.recolectar) {
-          this.manejarOro(player, tile);
-        }
-      },
-      null,
-      this
-    );
-
-    // Agregar un overlap para manejar la interacción del jugador con las escaleras
-    this.physics.add.overlap(
-      this.jugador,
-      this.escaleras,
-      (player, tile) => {
-        if (tile && tile.properties.escalable) {
-          this.manejarEscalera(player, tile);
-        }
-      },
-      null,
-      this
-    );
+    // Instanciar Oro y Escalera
+    this.oro = new Oro(this, this.oroLayer);
+    this.escalera = new Escalera(this, this.escalerasLayer);
 
     // Configurar los controles
     this.cursors = this.input.keyboard.createCursorKeys();
