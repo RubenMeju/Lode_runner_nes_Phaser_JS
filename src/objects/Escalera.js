@@ -31,8 +31,9 @@ export class Escalera {
     );
   }
 
-  manejarEscalera(player, tile) {
+  manejarEscalera(player) {
     console.log("¡Colisión con escalera!");
-    // Añadir lógica para manejar la colisión con la escalera
+    player.canClimb = true; // Permitir que el jugador escale
+    player.body.allowGravity = false; // Desactivar la gravedad mientras escala
   }
 }

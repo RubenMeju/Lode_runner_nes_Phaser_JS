@@ -14,11 +14,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     // El jugador no puede salir del mundo
     this.setCollideWorldBounds(true);
 
-    //velocidad del jugador
+    // Velocidad del jugador
     this.velocidad = 100;
     // Estado de muerte
     this.alive = true;
-    this.canClimb = false; // Añadir esta propiedad
+    // Estado de escalada
+    this.canClimb = false;
   }
 
   update(cursors, spaceBar) {
@@ -27,7 +28,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    //Detectar si la tecla espacio ha sido pulsada
+    // Detectar si la tecla espacio ha sido pulsada
     if (Phaser.Input.Keyboard.JustDown(spaceBar)) {
       console.log("¡La tecla de espacio ha sido pulsada!", this.x);
       this.anims.play("varita", true);
@@ -38,7 +39,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       let tileX = Math.floor(this.x / tileSize);
       let tileY = Math.floor(this.y / tileSize);
 
-      console.log("player: ", this.flipX);
       tileY++;
       if (this.flipX) {
         tileX++;
@@ -52,7 +52,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       }
     }
 
-    // Detectar si las teclas de dirección están siendo presionadas
+    // Movimiento horizontal
     if (cursors.left.isDown) {
       this.setVelocityX(-this.velocidad); // Mover a la izquierda con velocidad
       this.flipX = false; // Invertir el sprite hacia la izquierda
@@ -67,14 +67,18 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     // Movimiento vertical para escalar
-    if (this.canClimb && cursors.up.isDown) {
-      this.setVelocityY(-this.velocidad); // Subir la escalera
-      this.anims.play("up", true);
-    } else if (this.canClimb && cursors.down.isDown) {
-      this.setVelocityY(this.velocidad); // Bajar la escalera
-      this.anims.play("down", true);
-    } else if (this.canClimb) {
-      this.setVelocityY(0); // Detener el movimiento vertical si está escalando
+    if (this.canClimb) {
+      if (cursors.up.isDown) {
+        this.setVelocityY(-this.velocidad); // Subir la escalera
+        this.anims.play("up", true);
+        this.body.allowGravity = false; // Desactivar la gravedad mientras se escala
+      } else if (cursors.down.isDown) {
+        this.setVelocityY(this.velocidad); // Bajar la escalera
+        this.anims.play("down", true);
+        this.body.allowGravity = false; // Desactivar la gravedad mientras se escala
+      } else {
+        this.setVelocityY(0); // Detener el movimiento vertical si no se presiona ninguna tecla
+      }
     } else {
       this.body.allowGravity = true; // Asegurarse de que la gravedad actúe si no está escalando
     }
@@ -90,7 +94,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       this.body.setVelocity(0, 0); // Detener el movimiento
 
       this.scene.time.delayedCall(1000, () => {
-        this.setVisible(false); // Opcional: ocultar el jugador después de morir
+        this.setVisible(false); //  ocultar el jugador después de morir
       });
     }
   }
