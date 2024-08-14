@@ -22,7 +22,7 @@ export class GameScene extends Phaser.Scene {
     this.load.tilemapTiledJSON("mapa", "/assets/mapa.json");
     this.load.image("tileSets", "assets/tileSets.png");
 
-    this.load.spritesheet("player", "assets/sprites_player.png", {
+    this.load.spritesheet("player", "assets/sprites_player1.png", {
       frameWidth: 16,
       frameHeight: 16,
     });

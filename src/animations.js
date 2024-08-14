@@ -1,5 +1,4 @@
 export function createAnimations(scene) {
-  // Animación para mover a la izquierda
   scene.anims.create({
     key: "walk",
     frames: scene.anims.generateFrameNumbers("player", { start: 0, end: 2 }),
@@ -7,23 +6,11 @@ export function createAnimations(scene) {
     repeat: -1,
   });
 
-  // Animación para mover hacia arriba
   scene.anims.create({
-    key: "up",
+    key: "escalera_up_down",
     frames: scene.anims.generateFrameNumbers("player", {
       start: 12,
       end: 15,
-    }),
-    frameRate: 10,
-    repeat: -1,
-  });
-
-  // Animación para mover hacia abajo (cuarta fila)
-  scene.anims.create({
-    key: "down",
-    frames: scene.anims.generateFrameNumbers("player", {
-      start: 3,
-      end: 5,
     }),
     frameRate: 10,
     repeat: -1,
