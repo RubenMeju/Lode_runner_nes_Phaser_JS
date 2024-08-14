@@ -1,3 +1,8 @@
+import {
+  handleHorizontalMovement,
+  handleVerticalMovement,
+} from "../controls.js";
+
 export class Player extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
@@ -21,8 +26,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     this.handleSpaceBar(spaceBar);
-    this.handleHorizontalMovement(cursors);
-    this.handleVerticalMovement(cursors);
+    handleHorizontalMovement(this, cursors);
+    handleVerticalMovement(this, cursors);
 
     // Reseteo del estado de escalada al final del frame
     this.canClimb = false;
@@ -45,52 +50,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
       if (this.scene.bloques.isDestruible(tileX, tileY)) {
         this.scene.bloques.removeTileAt(tileX, tileY);
       }
-    }
-  }
-
-  handleHorizontalMovement(cursors) {
-    if (cursors.left.isDown) {
-      this.setVelocityX(-this.velocidad);
-      this.flipX = false;
-      this.anims.play("walk", true);
-    } else if (cursors.right.isDown) {
-      this.setVelocityX(this.velocidad);
-      this.flipX = true;
-      this.anims.play("walk", true);
-    } else {
-      this.setVelocityX(0);
-      if (!this.canClimb) {
-        this.anims.stop();
-      }
-    }
-  }
-
-  handleVerticalMovement(cursors) {
-    if (this.canClimb) {
-      if (cursors.up.isDown) {
-        this.climb(-this.velocidad);
-      } else if (cursors.down.isDown) {
-        this.climb(this.velocidad);
-      } else {
-        this.setVelocityY(0);
-        this.anims.pause();
-      }
-    } else {
-      this.body.allowGravity = true;
-      if (this.body.velocity.x === 0 && this.body.velocity.y === 0) {
-        this.anims.stop();
-      }
-    }
-  }
-
-  climb(velocity) {
-    this.setVelocityY(velocity);
-    this.body.allowGravity = false;
-
-    if (this.anims.currentAnim?.key !== "escalera_up_down") {
-      this.anims.play("escalera_up_down", true);
-    } else {
-      this.anims.resume();
     }
   }
 
