@@ -66,17 +66,5 @@ export class GameScene extends Phaser.Scene {
 
   update() {
     this.jugador.update(this.cursors, this.spaceBar);
-
-    // El jugador No esta tocando suelo
-    if (!this.jugador.body.blocked.down) {
-      console.log("El jugador no está colisionando.");
-      this.jugador.setVelocity(0, this.jugador.velocidad);
-      // this.jugador.anims.stop();
-      this.jugador.anims.play("caer", true);
-    } else {
-      console.log(
-        "El jugador está colisionando con bloques en la parte inferior."
-      );
-    }
   }
 }
