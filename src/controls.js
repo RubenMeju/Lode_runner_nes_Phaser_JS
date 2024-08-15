@@ -10,14 +10,14 @@ export function handleHorizontalMovement(player, cursors) {
     player.anims.play("walk", true);
   } else {
     player.setVelocityX(0);
-    if (!player.canClimb) {
+    if (!player.isClimbing) {
       player.anims.stop();
     }
   }
 }
 
 export function handleVerticalMovement(player, cursors) {
-  if (player.canClimb) {
+  if (player.isClimbing) {
     if (cursors.up.isDown) {
       climb(player, -player.velocidad);
     } else if (cursors.down.isDown) {

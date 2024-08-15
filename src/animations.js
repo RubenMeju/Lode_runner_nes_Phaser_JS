@@ -12,6 +12,12 @@ export function createAnimations(scene) {
       frameRate: 10,
       repeat: -1,
     },
+    caer: {
+      texture: "player",
+      frames: { start: 4, end: 7 },
+      frameRate: 10,
+      repeat: -1,
+    },
     varita: {
       texture: "player",
       frames: { start: 24, end: 26 },

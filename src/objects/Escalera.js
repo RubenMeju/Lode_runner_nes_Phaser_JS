@@ -23,7 +23,7 @@ export class Escalera {
       this.layer,
       (player, tile) => {
         if (tile && tile.properties.escalable) {
-          this.manejarEscalera(player, tile);
+          this.colisionEscalera(player, tile);
         }
       },
       null,
@@ -31,9 +31,8 @@ export class Escalera {
     );
   }
 
-  manejarEscalera(player) {
+  colisionEscalera(player) {
     console.log("¡Colisión con escalera!");
-    player.canClimb = true; // Permitir que el jugador escale
-    player.body.allowGravity = false; // Desactivar la gravedad mientras escala
+    player.isClimbing = true; // Permitir que el jugador escale
   }
 }

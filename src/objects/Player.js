@@ -16,21 +16,22 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.velocidad = 100;
     this.alive = true;
-    this.canClimb = false;
+    this.isClimbing = false;
   }
 
   update(cursors, spaceBar) {
+    //si el jugador esta muerto
     if (!this.alive) {
       this.stopMovement();
       return;
     }
 
     this.handleSpaceBar(spaceBar);
-    handleHorizontalMovement(this, cursors);
     handleVerticalMovement(this, cursors);
+    handleHorizontalMovement(this, cursors);
 
     // Reseteo del estado de escalada al final del frame
-    this.canClimb = false;
+    this.isClimbing = false;
   }
 
   stopMovement() {
