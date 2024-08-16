@@ -50,7 +50,7 @@ export class GameScene extends Phaser.Scene {
     this.oroLayer.setScale(this.escalado);
 
     // Crear el jugador
-    this.jugador = new Player(this, 548, 348, "player", 0);
+    this.jugador = new Player(this, 548, 480, "player", 0);
     this.physics.add.collider(this.jugador, this.bloques.solidos);
 
     // Instanciar Oro y Escalera
