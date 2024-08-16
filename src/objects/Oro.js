@@ -32,7 +32,7 @@ export class Oro {
   }
 
   manejarOro(player, tile) {
-    console.log("¡Colisión con oro!");
-    // Añadir lógica para manejar la colisión con el oro
+    console.log("¡Colisión con oro!", tile);
+    this.layer.removeTileAt(tile.x, tile.y); // Elimina el tile en la posición dada
   }
 }
