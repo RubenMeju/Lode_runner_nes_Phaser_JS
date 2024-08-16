@@ -18,6 +18,7 @@ export class Escalera {
       }
     );
 
+    //detectar si el jugador esta en una escalera
     this.scene.physics.add.overlap(
       this.scene.jugador,
       this.layer,

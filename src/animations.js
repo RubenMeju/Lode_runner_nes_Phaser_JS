@@ -42,6 +42,26 @@ export function createAnimations(scene) {
       frameRate: 18,
       repeat: 0,
     },
+
+    //enemigos
+    walkEnemy: {
+      texture: "player",
+      frames: { start: 36, end: 38 },
+      frameRate: 10,
+      repeat: -1,
+    },
+    escalera_up_down_enemy: {
+      texture: "player",
+      frames: { start: 12, end: 15 },
+      frameRate: 10,
+      repeat: -1,
+    },
+    caerEnemy: {
+      texture: "player",
+      frames: { start: 4, end: 7 },
+      frameRate: 10,
+      repeat: -1,
+    },
   };
 
   Object.entries(animationsConfig).forEach(([key, config]) => {

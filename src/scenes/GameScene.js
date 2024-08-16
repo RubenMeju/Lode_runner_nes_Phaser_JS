@@ -3,6 +3,7 @@ import { Bloque } from "../objects/Bloque.js";
 import { Player } from "../objects/Player.js";
 import { Oro } from "../objects/Oro.js";
 import { Escalera } from "../objects/Escalera.js";
+import { Enemy } from "../objects/Enemy.js";
 
 export class GameScene extends Phaser.Scene {
   constructor() {
@@ -57,6 +58,34 @@ export class GameScene extends Phaser.Scene {
     this.oro = new Oro(this, this.oroLayer);
     this.escalera = new Escalera(this, this.escalerasLayer);
 
+    // Crear el grupo de enemigos
+    this.enemies = this.physics.add.group({
+      classType: Enemy,
+      maxSize: this.maxEnemies,
+      runChildUpdate: true, // Permite que cada enemigo ejecute su método update()
+    });
+
+    // Crear enemigos y añadirlos al grupo
+    for (let i = 0; i < this.maxEnemies; i++) {
+      let enemy = this.enemies.get(50 + i * 50, 50, "player");
+      if (enemy) {
+        enemy.setActive(true);
+        enemy.setVisible(true);
+      }
+    }
+
+    this.physics.add.collider(this.enemies, this.bloques.solidos);
+
+    /*
+    // Configurar colisiones entre el jugador y los enemigos
+    this.physics.add.collider(
+      this.player,
+      this.enemies,
+      this.handlePlayerEnemyCollision,
+      null,
+      this
+    );
+*/
     // Configurar los controles
     this.cursors = this.input.keyboard.createCursorKeys();
     this.spaceBar = this.input.keyboard.addKey(
