@@ -32,8 +32,13 @@ export class Escalera {
     );
   }
 
-  colisionEscalera(player) {
-    console.log("¡Colisión con escalera!");
-    player.isClimbing = true; // Permitir que el jugador escale
+  colisionEscalera(entity) {
+    if (entity === this.scene.jugador) {
+      console.log("¡Colisión con escalera por el jugador!");
+      entity.isClimbing = true; // Permitir que el jugador escale
+    } else {
+      console.log("¡Colisión con escalera por un enemigo!");
+      entity.isClimbing = true; // Permitir que el enemigo escale
+    }
   }
 }

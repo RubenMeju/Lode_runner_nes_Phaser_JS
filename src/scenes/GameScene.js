@@ -76,6 +76,19 @@ export class GameScene extends Phaser.Scene {
 
     this.physics.add.collider(this.enemies, this.bloques.solidos);
 
+    // Detectar overlap entre enemigos y escaleras
+    this.physics.add.overlap(
+      this.enemies,
+      this.escalerasLayer,
+      (enemy, tile) => {
+        if (tile && tile.properties.escalable) {
+          this.escalera.colisionEscalera(enemy);
+        }
+      },
+      null,
+      this
+    );
+
     /*
     // Configurar colisiones entre el jugador y los enemigos
     this.physics.add.collider(
